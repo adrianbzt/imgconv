@@ -1,10 +1,18 @@
-// assets/js/app.js
-// ...
-
-// var $ = require('jquery');
-
 require('../css/app.css');
 
-// ... the rest of your JavaScript...
+// app.js
 
-console.log('I am here')
+const $ = require('jquery');
+// JS is equivalent to the normal "bootstrap" package
+// no need to set this to a variable, just require it
+require('bootstrap');
+
+// or you can include specific pieces
+// require('bootstrap/js/dist/tooltip');
+// require('bootstrap/js/dist/popover');
+
+$(document).ready(function() {
+    $(document).on('click', 'body', function() {
+      console.log('click me')
+    });
+});
