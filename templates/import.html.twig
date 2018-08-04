@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <!-- Global stylesheets -->
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+        {#<link rel="stylesheet" href="{{ asset('/css/app.css') }}" type="text/css"/>#}
+        {#<link rel="stylesheet" href="{{ asset('css/layout.min.css') }}" type="text/css"/>#}
+        {#<link rel="stylesheet" href="{{ asset('css/components.min.css') }}" type="text/css"/>#}
+        {#<link rel="stylesheet" href="{{ asset('css/colors.min.css') }}" type="text/css"/>#}
+        {#<link rel="stylesheet" href="{{ asset('css/styles.min.css') }}" type="text/css"/>#}
+
+
+        <!-- /global stylesheets -->
+
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    <h1>Numarul norocos este {{ number }} </h1>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="application/ecmascript" href="{{ asset('/js/app.js') }}"></script>
+{% endblock %}
+</body>
+</html>
