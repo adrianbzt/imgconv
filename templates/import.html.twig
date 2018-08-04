@@ -2,16 +2,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('build/favicon.ico') }}" />
+
+    <title>{% block title %}Image Conversion!{% endblock %}</title>
     {% block stylesheets %}
         <!-- Global stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-        {#<link rel="stylesheet" href="{{ asset('/css/app.css') }}" type="text/css"/>#}
-        {#<link rel="stylesheet" href="{{ asset('css/layout.min.css') }}" type="text/css"/>#}
-        {#<link rel="stylesheet" href="{{ asset('css/components.min.css') }}" type="text/css"/>#}
-        {#<link rel="stylesheet" href="{{ asset('css/colors.min.css') }}" type="text/css"/>#}
-        {#<link rel="stylesheet" href="{{ asset('css/styles.min.css') }}" type="text/css"/>#}
 
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
 
         <!-- /global stylesheets -->
 
@@ -23,7 +21,8 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="application/ecmascript" href="{{ asset('/js/app.js') }}"></script>
+    <script src="{{ asset('build/app.js') }}"></script>
+
 {% endblock %}
 </body>
 </html>
