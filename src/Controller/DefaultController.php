@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -23,10 +24,52 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * @Route("/convert/image")
+     * @param Request $request
+     * @return Response
+     */
+
+    public function convertImage(Request $request)
+    {
+
+        $files = $request->get('files');
+
+        echo '<pre>';
+        print_r($files);
+        die;
+
+        $extension = $request->get('extension');
+        $filename = $request->get('filename');
+
+        switch ($extension) {
+            case 'jpg':
+            case 'jpeg':
+                $image = imagecreatefromjpeg($filename);
+                break;
+            case 'gif':
+                $image = imagecreatefromgif($filename);
+                break;
+            case 'png':
+                $image = imagecreatefrompng($filename);
+                break;
+        }
+
+        $response = new Response(
+            json_encode($image, JSON_PRETTY_PRINT)
+        );
+
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    /**
      * @Route("/uploadImages")
      * @param Request $request
+     * @return Response
      */
-    public function insertImages(Request $request) {
+    public function insertImages(Request $request)
+    {
 
 
         $entityManger = $this->getDoctrine()->getManager();
@@ -37,7 +80,6 @@ class DefaultController extends AbstractController
         echo '<pre>';
         print_r($aResponse);
         die;
-
 
 
         $response = new Response(

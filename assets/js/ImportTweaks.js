@@ -1,3 +1,5 @@
+var lastfile;
+
 $('#add-files').on('click', function () {
 
     document.getElementById('myFileInput').click();
@@ -6,7 +8,7 @@ $('#add-files').on('click', function () {
 
         e.stopImmediatePropagation();
 
-        let lastfile = $('#myFileInput').last();
+         lastfile = $('#myFileInput').last();
 
         let files = lastfile[0].files;
 
@@ -17,7 +19,6 @@ $('#add-files').on('click', function () {
 
             $('#table-content tbody').append(htmlRow);
         })
-
     });
 })
 
@@ -26,11 +27,19 @@ $('#cancel-upload').on('click', function () {
 })
 
 $('#start-upload-multiple').on('click', function() {
+
+    console.log(lastfile)
+
     let PromiseMeYouWillRequestForData = $.ajax({
-        url: "/uploadImages",
-        data: 'test',
+        url: "/convert/image",
+        data: {
+            'files': lastfile
+        },
         method: 'POST',
         dataType: 'JSON',
+        contentType: false,
+        cache: false,
+        processData:false,
     });
 
     PromiseMeYouWillRequestForData.done(response => {
@@ -50,9 +59,11 @@ $(document).on('click', '.cancel-single-file', function() {
     $(this).closest ('tr').remove ();
 })
 
-$(document).on('click', '.upload-single-file', function() {
-    console.log('I was clicked')
-    console.log(this)
+
+$(document).on('click', '.convert-single-file', function() {
+
+console.log('convert me')
+
 })
 
 function TableContent() {
@@ -83,8 +94,8 @@ TableContent.prototype.getTableRow = function (rowData) {
         <td>` + rowData.fileExtension + `</td>
         <td>` + rowData.fileSize + `</td>
         <td>
-            <button class="btn btn-warning cancel cancel-single-file"><span>Cancel upload</span></button>
-            <button class="btn btn-primary upload-single-file"><span>Upload</span></button>
+            <button class="btn btn-warning cancel cancel-single-file"><span>Cancel</span></button>
+            <button class="btn btn-primary convert-single-file"><span>Convert to JPG</span></button>
         </td>
         <td>
             <div class="progress">
@@ -93,7 +104,7 @@ TableContent.prototype.getTableRow = function (rowData) {
             </div>
         </td>
         <td>
-            <button class="btn btn-success"><span>Download PNG</span></button>
+            <button class="btn btn-success"><span>Download JPG</span></button>
         </td>        
     </tr>
     `;
