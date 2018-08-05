@@ -62,6 +62,9 @@ class DefaultController extends AbstractController
             }
         }
 
+        //TODO: just for debugging purposes
+        sleep(2);
+
 
         $response = new Response(
             json_encode($convertedImages, JSON_PRETTY_PRINT)

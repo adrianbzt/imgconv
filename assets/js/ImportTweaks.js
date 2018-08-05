@@ -92,6 +92,8 @@ TableContent.prototype.pushFieldsToServer = function (filesToSend) {
         $.each(response, function (fileId, value) {
 
 
+
+
             TableContent.prototype.updateProgressBar(fileId, value);
 
             console.log(value)
