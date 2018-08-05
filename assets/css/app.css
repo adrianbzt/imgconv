@@ -1,3 +1,16 @@
 body {
     background-color: #eee;
 }
+
+.uploader-menu{
+    display: flex;
+    padding-top: 60px;
+    justify-content: space-evenly
+}
+
+.uploader-content{
+    display: flex;
+    padding-top: 10px;
+    justify-content: center
+
+}
