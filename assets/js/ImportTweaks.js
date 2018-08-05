@@ -19,6 +19,9 @@ $('#add-files').on('click', function () {
 
             $('#table-content tbody').append(htmlRow);
         })
+
+        $('#start-upload-multiple').prop('disabled', false);
+        $('#cancel-upload').prop('disabled', false);
     });
 })
 
@@ -28,6 +31,7 @@ $('#cancel-upload').on('click', function () {
 
 $('#start-upload-multiple').on('click', function () {
 
+    //TODO: use real files
     let filesToConvert = ['file1.png', 'file2.png', 'file3.jpg', 'file4.png', 'file5.png'];
 
     let filesToSend = [];
@@ -59,10 +63,24 @@ $('#start-upload-multiple').on('click', function () {
     }
 
 
+    $('#start-download-multiple').prop('disabled', false);
+    $('#start-download-multiple').toggleClass('btn-success');
+    $('#start-upload-multiple').prop('disabled', true);
+    $('#cancel-upload').prop('disabled', true);
+
 })
 
 $(document).on('click', '.cancel-single-file', function () {
     $(this).closest('tr').remove();
+    alert('Work in progress');
+})
+
+$(document).on('click', '#start-download-multiple', function () {
+    alert('Work in progress');
+})
+
+$(document).on('click', '.single-download', function() {
+    alert('Work in progress');
 })
 
 
@@ -70,6 +88,7 @@ $(document).on('click', '.convert-single-file', function () {
 
     //TODO: implement it for single file
     console.log('TO DO: Convert a single file')
+    alert('Work in progress');
 
 })
 
@@ -78,6 +97,11 @@ function TableContent() {
 }
 
 TableContent.prototype.pushFieldsToServer = function (filesToSend) {
+
+    $.each(filesToSend, function(key, filename) {
+        TableContent.prototype.updateProgressBarInQueue(filename);
+    })
+
     let PromiseMeYouWillRequestForData = $.ajax({
         url: "/convert/image",
         data: {
@@ -90,13 +114,8 @@ TableContent.prototype.pushFieldsToServer = function (filesToSend) {
     PromiseMeYouWillRequestForData.done(response => {
 
         $.each(response, function (fileId, value) {
-
-
-
-
             TableContent.prototype.updateProgressBar(fileId, value);
-
-            console.log(value)
+            TableContent.prototype.updateDownloadButtonStatus(fileId, value);
         })
 
     });
@@ -127,13 +146,38 @@ TableContent.prototype.updateProgressBar = function (fileId, value) {
     progressBar.text(progressMessage)
 }
 
+TableContent.prototype.updateProgressBarInQueue = function (filename) {
+
+    let fileId = filename.split('.')[0];
+    let progressBar = $("#" + fileId).find('div .progress-bar');
+
+    let progresPercentage = 100;
+    let progressStatus = 'bg-active';
+    let progressMessage = 'Queued';
+
+    progressBar.prop('aria-valuenow', progresPercentage);
+    progressBar.css('width', progresPercentage + "%");
+    progressBar.addClass(progressStatus);
+    progressBar.text(progressMessage)
+}
+
+TableContent.prototype.updateDownloadButtonStatus = function (fileId, value) {
+
+    let downloadButton = $("#" + fileId).find('.single-download');
+
+    if(value.success === 1) {
+        downloadButton.prop('disabled', false);
+        downloadButton.addClass('btn-success');
+    }
+}
+
 TableContent.prototype.extractFields = function (rawData) {
 
     let fields = {};
 
     fields.fileName = rawData.name.split('.')[0];
     fields.fileExtension = rawData.name.split('.')[1];
-    fields.fileSize =TableContent.prototype.formatBytes(rawData.size, 2);
+    fields.fileSize = TableContent.prototype.formatBytes(rawData.size, 2);
     fields.filePath = rawData.value;
 
     return fields;
@@ -169,7 +213,7 @@ TableContent.prototype.getTableRow = function (rowData) {
             </div>
         </td>
         <td>
-            <button class="btn btn-success" disabled="disabled"><span>Download JPG</span></button>
+            <button class="btn single-download" disabled="disabled"><span>Download JPG</span></button>
         </td>        
     </tr>
     `;

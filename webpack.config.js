@@ -21,7 +21,6 @@ Encore
     // .addEntry('jquery', './assets/js/jquery.min.js')
     .addEntry('bootstrap', './assets/js/bootstrap.bundle.min.js')
     .addEntry('importTweaks', './assets/js/ImportTweaks.js')
-    .addEntry('tableContent', './assets/js/TableContent.js')
     //.addEntry('page2', './assets/js/page2.js')
 
     /*
