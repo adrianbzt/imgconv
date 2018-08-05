@@ -18,7 +18,7 @@ Encore
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
-    .addEntry('jquery', './assets/js/jquery.min.js')
+    // .addEntry('jquery', './assets/js/jquery.min.js')
     .addEntry('bootstrap', './assets/js/bootstrap.bundle.min.js')
     .addEntry('importTweaks', './assets/js/ImportTweaks.js')
     .addEntry('tableContent', './assets/js/TableContent.js')

@@ -34,28 +34,37 @@ class DefaultController extends AbstractController
 
         $files = $request->get('files');
 
-        echo '<pre>';
-        print_r($files);
-        die;
+        $convertedImages = [];
 
-        $extension = $request->get('extension');
-        $filename = $request->get('filename');
+        foreach ($files as $filename) {
+            $split = explode(".", $filename);
 
-        switch ($extension) {
-            case 'jpg':
-            case 'jpeg':
-                $image = imagecreatefromjpeg($filename);
-                break;
-            case 'gif':
-                $image = imagecreatefromgif($filename);
-                break;
-            case 'png':
-                $image = imagecreatefrompng($filename);
-                break;
+            if (!empty($split)) {
+                $filename = $split[0];
+                $extension = $split[1];
+                if(strtolower($extension) === 'png') {
+                    $convertedImages[$filename] = array(
+                        "success" => 1,
+                        "message" => "Success"
+                    );
+                } else {
+                    $convertedImages[$filename] = array(
+                        "success" => 0,
+                        "message" => "Already JPG"
+                    );
+                }
+
+            } else {
+                $convertedImages['generic'] = array(
+                    "success" => 0,
+                    "message" => "Error"
+                );
+            }
         }
 
+
         $response = new Response(
-            json_encode($image, JSON_PRETTY_PRINT)
+            json_encode($convertedImages, JSON_PRETTY_PRINT)
         );
 
         $response->headers->set('Content-Type', 'application/json');
