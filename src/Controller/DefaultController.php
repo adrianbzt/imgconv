@@ -32,11 +32,13 @@ class DefaultController extends AbstractController
         $entityManger = $this->getDoctrine()->getManager();
         $repository = $entityManger->getRepository('App:ImgConv');
 
-        $aResponse = $repository->findOneBySomeField('1');
+        $aResponse = $repository->insertValues();
 
         echo '<pre>';
         print_r($aResponse);
         die;
+
+
 
         $response = new Response(
             json_encode($aResponse, JSON_PRETTY_PRINT)

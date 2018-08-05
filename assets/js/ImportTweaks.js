@@ -92,6 +92,9 @@ TableContent.prototype.getTableRow = function (rowData) {
                      aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </td>
+        <td>
+            <button class="btn btn-success"><span>Download PNG</span></button>
+        </td>        
     </tr>
     `;
 

@@ -19,6 +19,26 @@ class ImgConvRepository extends ServiceEntityRepository
         parent::__construct($registry, ImgConv::class);
     }
 
+
+    public function insertValues() {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        INSERT INTO img_conv
+         (name, type, size) 
+         VALUES 
+         ("picture1", "jpg", "1254"),
+         ("picture2", "jpg", "4454"),
+         ("picture3", "jpg", "4234")
+        ';
+        $stmt = $conn->prepare($sql);
+        return $stmt->execute();
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAll();
+    }
+
 //    /**
 //     * @return ImgConv[] Returns an array of ImgConv objects
 //     */
@@ -38,6 +58,7 @@ class ImgConvRepository extends ServiceEntityRepository
 
     public function findOneBySomeField($value): ?ImgConv
     {
+
         return $this->createQueryBuilder('i')
             ->andWhere('i.id = :val')
             ->setParameter('val', $value)
