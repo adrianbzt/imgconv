@@ -2634,6 +2634,10 @@ isobject@^3.0.0, isobject@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-3.0.1.tgz#4e431e92b11a9731636aa1f9c8d1ccbcfdab78df"
 
+jquery-pluploader@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/jquery-pluploader/-/jquery-pluploader-1.1.7.tgz#aaccfbf04ec0b5f50694f3070c3ce8f3b926269b"
+
 jquery@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
@@ -2724,6 +2728,10 @@ lcid@^1.0.0:
   resolved "https://registry.yarnpkg.com/lcid/-/lcid-1.0.0.tgz#308accafa0bc483a3867b4b6f2b9506251d1b835"
   dependencies:
     invert-kv "^1.0.0"
+
+limitless@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/limitless/-/limitless-0.0.0.tgz#f3e0ee44118b9a52656f9a454e6b7fcbad0efae7"
 
 load-json-file@^1.0.0:
   version "1.1.0"

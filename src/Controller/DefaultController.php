@@ -16,7 +16,7 @@ class DefaultController extends AbstractController
     {
         $number = random_int(0, 100);
 
-        return $this->render('import.html.twig', array(
+        return $this->render('layout.html.twig', array(
             'number' => $number,
         ));
     }

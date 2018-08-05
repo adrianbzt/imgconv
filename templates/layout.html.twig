@@ -17,7 +17,11 @@
 </head>
 <body>
 {% block body %}
-    <h1>Numarul norocos este {{ number }} </h1>
+    {% include "header.html.twig" %}
+
+    {% include 'main.html.twig' %}
+
+    {% include "footer.html.twig" %}
 {% endblock %}
 
 {% block javascripts %}
