@@ -1,8 +1,11 @@
 $('#add-files').on('click', function () {
 
-    $("#myFileInput").trigger("click");
+    document.getElementById('myFileInput').click();
 
-    $('#myFileInput').change(function () {
+    $('#myFileInput').change(function (e) {
+
+        e.stopImmediatePropagation();
+
         let lastfile = $('#myFileInput').last();
 
         let files = lastfile[0].files;
@@ -20,6 +23,27 @@ $('#add-files').on('click', function () {
 
 $('#cancel-upload').on('click', function () {
     $('#table-content tbody tr').remove();
+})
+
+$('#start-upload-multiple').on('click', function() {
+    let PromiseMeYouWillRequestForData = $.ajax({
+        url: "/uploadImages",
+        data: 'test',
+        method: 'POST',
+        dataType: 'JSON',
+    });
+
+    PromiseMeYouWillRequestForData.done(response => {
+
+        console.log(response)
+
+    });
+
+    PromiseMeYouWillRequestForData.always(data => {
+
+        console.log(data)
+    });
+
 })
 
 $(document).on('click', '.cancel-single-file', function() {
