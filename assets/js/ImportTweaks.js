@@ -1,6 +1,6 @@
-var lastfile;
-
 $('#add-files').on('click', function () {
+
+    TableContent.prototype.clearTableContent();
 
     document.getElementById('myFileInput').click();
 
@@ -8,7 +8,7 @@ $('#add-files').on('click', function () {
 
         e.stopImmediatePropagation();
 
-        lastfile = $('#myFileInput').last();
+        let lastfile = $('#myFileInput').last();
 
         let files = lastfile[0].files;
 
@@ -25,9 +25,7 @@ $('#add-files').on('click', function () {
     });
 })
 
-$('#cancel-upload').on('click', function () {
-    $('#table-content tbody tr').remove();
-})
+
 
 $('#start-upload-multiple').on('click', function () {
 
@@ -75,6 +73,10 @@ $(document).on('click', '.cancel-single-file', function () {
     alert('Work in progress');
 })
 
+$('#cancel-upload').on('click', function () {
+    TableContent.prototype.clearTableContent();
+})
+
 $(document).on('click', '#start-download-multiple', function () {
     alert('Work in progress');
 })
@@ -94,6 +96,10 @@ $(document).on('click', '.convert-single-file', function () {
 
 function TableContent() {
 
+}
+
+TableContent.prototype.clearTableContent = function() {
+    $('#table-content tbody tr').remove();
 }
 
 TableContent.prototype.pushFieldsToServer = function (filesToSend) {

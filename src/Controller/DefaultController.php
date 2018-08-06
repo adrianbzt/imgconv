@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Services\ImageConversion;
 
 class DefaultController extends AbstractController
 {
@@ -16,11 +17,7 @@ class DefaultController extends AbstractController
      */
     public function number()
     {
-        $number = random_int(0, 100);
-
-        return $this->render('layout.html.twig', array(
-            'number' => $number,
-        ));
+        return $this->render('layout.html.twig', array());
     }
 
     /**
@@ -34,40 +31,11 @@ class DefaultController extends AbstractController
 
         $files = $request->get('files');
 
-        $convertedImages = [];
-
-        foreach ($files as $filename) {
-            $split = explode(".", $filename);
-
-            if (!empty($split)) {
-                $filename = $split[0];
-                $extension = $split[1];
-                if(strtolower($extension) === 'png') {
-                    $convertedImages[$filename] = array(
-                        "success" => 1,
-                        "message" => "Success"
-                    );
-                } else {
-                    $convertedImages[$filename] = array(
-                        "success" => 0,
-                        "message" => "Already JPG"
-                    );
-                }
-
-            } else {
-                $convertedImages['generic'] = array(
-                    "success" => 0,
-                    "message" => "Error"
-                );
-            }
-        }
-
-        //TODO: just for debugging purposes
-        sleep(2);
-
+        $imageConversion = new ImageConversion();
+        $result = $imageConversion->convertImage($files);
 
         $response = new Response(
-            json_encode($convertedImages, JSON_PRETTY_PRINT)
+            json_encode($result, JSON_PRETTY_PRINT)
         );
 
         $response->headers->set('Content-Type', 'application/json');
@@ -76,6 +44,7 @@ class DefaultController extends AbstractController
     }
 
     /**
+     * TODO: the progress should be saved in DB and resumed in case of an interruption
      * @Route("/uploadImages")
      * @param Request $request
      * @return Response
@@ -83,16 +52,10 @@ class DefaultController extends AbstractController
     public function insertImages(Request $request)
     {
 
-
         $entityManger = $this->getDoctrine()->getManager();
         $repository = $entityManger->getRepository('App:ImgConv');
 
         $aResponse = $repository->insertValues();
-
-        echo '<pre>';
-        print_r($aResponse);
-        die;
-
 
         $response = new Response(
             json_encode($aResponse, JSON_PRETTY_PRINT)
