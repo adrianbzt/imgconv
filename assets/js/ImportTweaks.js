@@ -1,31 +1,23 @@
-$('#add-files').on('click', function () {
-
-    TableContent.prototype.clearTableContent();
+$(document).on('click', '#add-files', function () {
 
     document.getElementById('myFileInput').click();
 
-    $('#myFileInput').change(function (e) {
+    $(document).off('change', '#myFileInput').on('change', '#myFileInput', function (e) {
 
-        e.stopImmediatePropagation();
+        let fileInput = $('#myFileInput')[0].files;
+        buildFormData(e, fileInput);
 
-        let lastfile = $('#myFileInput').last();
+        let filesToSend = [];
+        let counter = 0;
 
-        let files = lastfile[0].files;
 
-        $.each(files, function (key, value) {
-            let toDisplayFields = TableContent.prototype.extractFields(value);
+        $('#start-download-multiple').prop('disabled', false);
+        $('#start-download-multiple').toggleClass('btn-success');
+        $('#start-upload-multiple').prop('disabled', true);
+        $('#cancel-upload').prop('disabled', true);
 
-            let htmlRow = TableContent.prototype.getTableRow(toDisplayFields);
-
-            $('#table-content tbody').append(htmlRow);
-        })
-
-        $('#start-upload-multiple').prop('disabled', false);
-        $('#cancel-upload').prop('disabled', false);
     });
 })
-
-
 
 $('#start-upload-multiple').on('click', function () {
 
@@ -81,10 +73,9 @@ $(document).on('click', '#start-download-multiple', function () {
     alert('Work in progress');
 })
 
-$(document).on('click', '.single-download', function() {
+$(document).on('click', '.single-download', function () {
     alert('Work in progress');
 })
-
 
 $(document).on('click', '.convert-single-file', function () {
 
@@ -94,35 +85,96 @@ $(document).on('click', '.convert-single-file', function () {
 
 })
 
+function buildFormData(e, formInput) {
+
+
+    let counter = 0;
+    let data = new FormData();
+    $.each(formInput, function (i, file) {
+
+        let tmppath = processBuildDataPath(e, i)
+
+        let toDisplayFields = TableContent.prototype.extractFields(file, tmppath);
+
+        let isAllowed = checkIfFileExtensionIsAllowed(toDisplayFields.fileExtension);
+
+        if (isAllowed) {
+            let htmlRow = TableContent.prototype.getTableRow(toDisplayFields);
+
+            $('#table-content tbody').append(htmlRow);
+
+            if (counter < 3) {
+                counter++;
+                data.append('file-' + i, file);
+            } else {
+                TableContent.prototype.pushFieldsToServer(data);
+
+                for (var pair of data.entries()) {
+                    data.delete(pair[0]);
+                }
+                data.append('file-' + i, file);
+                counter = 0;
+            }
+        }
+    });
+
+    if (counter > 0) {
+        TableContent.prototype.pushFieldsToServer(data);
+
+        for (var pair of data.entries()) {
+            data.delete(pair[0]);
+        }
+        counter = 0;
+    }
+
+}
+
+function processBuildDataPath(e, i) {
+    return URL.createObjectURL(e.target.files[i]);
+}
+
+
+function checkIfFileExtensionIsAllowed(extension) {
+
+    let allowedExtensions = ['png'];
+
+    if (allowedExtensions.includes(extension)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function TableContent() {
 
 }
 
-TableContent.prototype.clearTableContent = function() {
+TableContent.prototype.clearTableContent = function () {
     $('#table-content tbody tr').remove();
 }
 
 TableContent.prototype.pushFieldsToServer = function (filesToSend) {
 
-    $.each(filesToSend, function(key, filename) {
-        TableContent.prototype.updateProgressBarInQueue(filename);
+    $.each(filesToSend, function (key, filename) {
+        //TableContent.prototype.updateProgressBarInQueue(filename);
     })
 
     let PromiseMeYouWillRequestForData = $.ajax({
         url: "/convert/image",
-        data: {
-            'files': filesToSend
-        },
+        data: filesToSend,
+        cache: false,
+        contentType: false,
+        processData: false,
         method: 'POST',
-        dataType: 'JSON'
+        type: 'POST', // For jQuery < 1.9
     });
 
     PromiseMeYouWillRequestForData.done(response => {
 
-        $.each(response, function (fileId, value) {
-            TableContent.prototype.updateProgressBar(fileId, value);
-            TableContent.prototype.updateDownloadButtonStatus(fileId, value);
-        })
+        // $.each(response, function (fileId, value) {
+        //     //TableContent.prototype.updateProgressBar(fileId, value);
+        //     //TableContent.prototype.updateDownloadButtonStatus(fileId, value);
+        // })
 
     });
 
@@ -154,6 +206,8 @@ TableContent.prototype.updateProgressBar = function (fileId, value) {
 
 TableContent.prototype.updateProgressBarInQueue = function (filename) {
 
+    console.log(filename)
+
     let fileId = filename.split('.')[0];
     let progressBar = $("#" + fileId).find('div .progress-bar');
 
@@ -171,20 +225,20 @@ TableContent.prototype.updateDownloadButtonStatus = function (fileId, value) {
 
     let downloadButton = $("#" + fileId).find('.single-download');
 
-    if(value.success === 1) {
+    if (value.success === 1) {
         downloadButton.prop('disabled', false);
         downloadButton.addClass('btn-success');
     }
 }
 
-TableContent.prototype.extractFields = function (rawData) {
+TableContent.prototype.extractFields = function (rawData, tmppath) {
 
     let fields = {};
 
     fields.fileName = rawData.name.split('.')[0];
     fields.fileExtension = rawData.name.split('.')[1];
     fields.fileSize = TableContent.prototype.formatBytes(rawData.size, 2);
-    fields.filePath = rawData.value;
+    fields.filePath = tmppath;
 
     return fields;
 
@@ -203,7 +257,7 @@ TableContent.prototype.getTableRow = function (rowData) {
     let row = `
        <tr id="` + rowData.fileName + `">
         <th> 
-            <img scope="row"  style="width: 80px; height: 80px" src="https://s3-us-west-2.amazonaws.com/anchor-generated-image-bank/production/podcast_uploaded_nologo400/157488/157488-1518801111947-88e04d00a35c4.jpg" /img>
+            <img scope="row"  style="width: 80px; height: 80px" src="` + rowData.filePath + `" /img>
          </th>
         <td>` + rowData.fileName + `</td>
         <td>` + rowData.fileExtension + `</td>

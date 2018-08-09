@@ -1,0 +1,11 @@
+{% block javascripts %}
+    <script src="{{ asset('build/app.js') }}"></script>
+    {#<script src="{{ asset('build/jquery.js') }}"></script>#}
+    <script src="{{ asset('build/bootstrap.js') }}"></script>
+    <script src="{{ asset('build/importTweaks.js') }}"></script>
+{% endblock %}
+
+<form id="upload-files" action="#" method="POST" enctype="multipart/form-data">
+    <input type="submit" name="btn_upload" value="file_upload" />
+    <input type="file" name="files_to_upload[]" multiple="true"/>
+</form>

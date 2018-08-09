@@ -6,7 +6,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Services\ImageConversion;
+use App\Service\ImageConversion;
+use App\Service\FileUploader;
+
 
 class DefaultController extends AbstractController
 {
@@ -15,30 +17,27 @@ class DefaultController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    public function number()
+    public function defaultAction()
     {
         return $this->render('layout.html.twig', array());
     }
 
     /**
      * @Route("/convert/image")
-     * @param Request $request
      * @return Response
      */
 
-    public function convertImage(Request $request)
+    public function convertImage()
     {
 
-        $files = $request->get('files');
-
         $imageConversion = new ImageConversion();
-        $result = $imageConversion->convertImage($files);
+        $result = $imageConversion->convertImage($_FILES);
 
         $response = new Response(
             json_encode($result, JSON_PRETTY_PRINT)
         );
 
-        $response->headers->set('Content-Type', 'application/json');
+        $response->headers->set('Content-Type', 'image/jpg');
 
         return $response;
     }

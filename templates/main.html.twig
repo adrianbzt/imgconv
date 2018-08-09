@@ -1,19 +1,27 @@
 <div class="container">
     <div class="uploader-menu">
 
+
         <button class="btn btn-success" id="add-files"><i class=" glyphicon glyphicon-plus"></i>
             <span>Add files...</span>
-            <input type="file" id="myFileInput" style="display: none" multiple="multiple"/>
+            <input type="file" name="images[]" id="myFileInput" style="display: none" multiple="multiple"/>
         </button>
-        <button type="submit" class="btn btn-primary start" id="start-upload-multiple" disabled="disabled"><i class="glyphicon glyphicon-upload"></i>
+
+        <button class="btn btn-primary start" id="start-upload-multiple"><i
+                    class="glyphicon glyphicon-upload"></i>
             <span>Convert all</span>
         </button>
-        <button type="reset" class="btn btn-warning cancel" id="cancel-upload" disabled="disabled"><i class="glyphicon glyphicon-ban-circle"></i>
+
+
+        <button class="btn btn-warning cancel" id="cancel-upload" disabled="disabled"><i
+                    class="glyphicon glyphicon-ban-circle"></i>
             <span>Cancel all</span>
         </button>
-        <button type="submit" class="btn btn-active" id="start-download-multiple" disabled="disabled"><i class="glyphicon glyphicon-download"></i>
+        <button class="btn btn-active" id="start-download-multiple" disabled="disabled"><i
+                    class="glyphicon glyphicon-download"></i>
             <span>Download all</span>
         </button>
+
     </div>
     <div class="uploader-content">
         <table class="table table-bordered table-hover" id="table-content">
