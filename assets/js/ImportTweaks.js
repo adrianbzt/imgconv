@@ -74,7 +74,8 @@ $(document).on('click', '#start-download-multiple', function () {
 })
 
 $(document).on('click', '.single-download', function () {
-    alert('Work in progress');
+
+    TableContent.prototype.downloadImage('file1');
 })
 
 $(document).on('click', '.convert-single-file', function () {
@@ -153,6 +154,23 @@ TableContent.prototype.clearTableContent = function () {
     $('#table-content tbody tr').remove();
 }
 
+TableContent.prototype.downloadImage = function (filesToSend) {
+
+    let PromiseMeYouWillRequestForData = $.ajax({
+        url: "/downloadImage",
+        data: 'file1.jpg',
+        method: 'POST',
+        type: 'POST', // For jQuery < 1.9
+    });
+
+    PromiseMeYouWillRequestForData.done(response => {
+
+        console.log('I am done')
+
+    });
+
+}
+
 TableContent.prototype.pushFieldsToServer = function (filesToSend) {
 
     $.each(filesToSend, function (key, filename) {
@@ -160,7 +178,7 @@ TableContent.prototype.pushFieldsToServer = function (filesToSend) {
     })
 
     let PromiseMeYouWillRequestForData = $.ajax({
-        url: "/convert/image",
+        url: "/convertImage",
         data: filesToSend,
         cache: false,
         contentType: false,
@@ -273,10 +291,11 @@ TableContent.prototype.getTableRow = function (rowData) {
             </div>
         </td>
         <td>
-            <button class="btn single-download" disabled="disabled"><span>Download JPG</span></button>
+            <button class="btn single-download"><span>Download JPG</span></button>
         </td>        
     </tr>
     `;
 
     return row;
 }
+

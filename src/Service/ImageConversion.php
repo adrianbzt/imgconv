@@ -4,6 +4,7 @@ namespace App\Service;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Finder\Finder;
 
 class ImageConversion
 {
@@ -23,39 +24,10 @@ class ImageConversion
             $fileNameNoExt = substr($fileData['name'], 0, strlen($fileExtension) + 2);
             $fileNameWithExt = $fileData['name'];
 
-            $this->makeConversion($filePath, $fileNameNoExt . '.jpg', $fileExtension);
+            $saveToLocation = "../public/download/images/jpg/" . $fileNameNoExt . '.jpg';
 
-//            echo '<pre>';
-//            print_r($fileData);
-//            print_r($filePath);
-//            print_r($fileNameNoExt);
-//            print_r($fileNameWithExt);
-//            print_r($fileExtension);
-//            die;
+            $convertedImages[] = $this->makeConversion($filePath, $saveToLocation, $fileExtension, $fileNameNoExt);
 
-//            $split = explode(".", $filename);
-//
-//            if (!empty($split)) {
-//                $filename = $split[0];
-//                $extension = $split[1];
-//                if (strtolower($extension) === 'png') {
-//                    $convertedImages[$filename] = array(
-//                        "success" => 1,
-//                        "message" => "Success"
-//                    );
-//                } else {
-//                    $convertedImages[$filename] = array(
-//                        "success" => 0,
-//                        "message" => "Already JPG"
-//                    );
-//                }
-//
-//            } else {
-//                $convertedImages['generic'] = array(
-//                    "success" => 0,
-//                    "message" => "Error"
-//                );
-//            }
         }
 
         //TODO: just for debugging purposes
@@ -65,7 +37,7 @@ class ImageConversion
 
     }
 
-    private function makeConversion($targetFile, $newFile, $extension)
+    private function makeConversion($targetFile, $saveToLocation, $extension, $fileNameNoExt)
     {
 
         list($width, $height) = getimagesize($targetFile);
@@ -80,11 +52,21 @@ class ImageConversion
                 break;
         }
 
-        $ictc = imagecreatetruecolor($width, $height);
-        imagecopyresampled($ictc, $newImage, 0, 0, 0, 0, $width, $height, $width, $height);
-        header("Content-Type: image/jpg");
-        imagejpeg($ictc, $newFile, 80);
+        $imageCreator = imagecreatetruecolor($width, $height);
+        imagecopyresampled($imageCreator, $newImage, 0, 0, 0, 0, $width, $height, $width, $height);
+
+        // this will try to download the image instead of sending the return array
+        //header("Content-Type: image/jpg");
+        imagejpeg($imageCreator, $saveToLocation, 80);
         imagedestroy($newImage);
+
+        $toReturn = array(
+            'fileLocation' => $saveToLocation,
+            'fileName' => $fileNameNoExt,
+            'extension' => $extension
+        );
+
+        return $toReturn;
 
     }
 }
