@@ -165,7 +165,8 @@ TableContent.prototype.downloadImage = function (filesToSend) {
 
     PromiseMeYouWillRequestForData.done(response => {
 
-        console.log('I am done')
+
+        
 
     });
 
@@ -289,9 +290,14 @@ TableContent.prototype.getTableRow = function (rowData) {
                 <div class="progress-bar progress-bar-striped bg-default" role="progressbar" style="width: 0%"
                      aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
+
+<div href="/images/myw3schoolsimage.jpg" download>
+  <img src="/images/myw3schoolsimage.jpg" alt="W3Schools" width="104" height="142">
+</div>
+
         </td>
         <td>
-            <button class="btn single-download"><span>Download JPG</span></button>
+            <button class="btn btn-success single-download"><span>Download JPG</span></button>
         </td>        
     </tr>
     `;

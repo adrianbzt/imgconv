@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b2762062-fec2-4c0b-ae77-2fa48bdbe970" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/ImportTweaks.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/ImportTweaks.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/file1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/file2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/file4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DefaultController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ImageConversion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ImageConversion.php" afterDir="false" />
-    </list>
+    <list default="true" id="b2762062-fec2-4c0b-ae77-2fa48bdbe970" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,8 +82,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/DefaultController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="62" column="60" selection-start-line="62" selection-start-column="60" selection-end-line="62" selection-end-column="60" />
+            <state relative-caret-position="329">
+              <caret line="58" column="53" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="53" />
               <folding>
                 <element signature="e#34#80#0#PHP" expanded="true" />
                 <element signature="e#531#549#0#PHP" expanded="true" />
@@ -280,7 +270,7 @@
       <path value="$PROJECT_DIR$/vendor/symfony/maker-bundle" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="57" />
     <option name="y" value="47" />
     <option name="width" value="1179" />
@@ -414,15 +404,15 @@
       <workItem from="1533456262343" duration="32026000" />
       <workItem from="1533532911577" duration="2412000" />
       <workItem from="1533798292086" duration="18139000" />
-      <workItem from="1533974485318" duration="5820000" />
+      <workItem from="1533974485318" duration="6111000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74441000" />
+    <option name="totallyTimeSpent" value="74732000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="47" y="25" width="1319" height="743" extended-state="6" />
+    <frame x="47" y="25" width="1319" height="743" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29379418" />
@@ -710,8 +700,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="62" column="60" selection-start-line="62" selection-start-column="60" selection-end-line="62" selection-end-column="60" />
+        <state relative-caret-position="329">
+          <caret line="58" column="53" selection-start-line="58" selection-start-column="31" selection-end-line="58" selection-end-column="53" />
           <folding>
             <element signature="e#34#80#0#PHP" expanded="true" />
             <element signature="e#531#549#0#PHP" expanded="true" />
