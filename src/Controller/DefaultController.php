@@ -53,22 +53,40 @@ class DefaultController extends AbstractController
     {
 
         $filePath = '../public/download/images/jpg/file1.jpg';
-        $response = new Response($filePath);
+        // $response = new Response($fileName);
 
-        $disposition = $response->headers->makeDisposition(
-            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-            'file1.jpg'
-        );
+        // $disposition = $response->headers->makeDisposition(
+        //     ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+        //     $fileName
+        // );
 
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-Disposition', $disposition);
-        $response->headers->set('Content-Type', 'image/jpg');
+        // $response->headers->set('Content-Description', 'File Transfer');
+        // $response->headers->set('Cache-Control', 'private');
+        // $response->headers->set('Content-Disposition', $disposition);
+        // $response->headers->set('Content-Type', 'image/jpg');
+        // $response->headers->set('Expires', '0');
+        // $response->headers->set('Pragma', 'public');
+        // $response->headers->set('Content-Length: ', filesize($filePath));
 
-        $response->sendHeaders();
+        // $response->sendHeaders();
 
-        $response->setContent(file_get_contents($filePath));
+        // $response->setContent(file_get_contents($filePath));
 
-        return $response;
+        // return $response;
+
+
+         if(file_exists($filePath)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: image/jpeg');
+            header('Content-Disposition: attachment; filename="'.basename($filePath).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($filePath));
+            flush(); // Flush system output buffer
+            readfile($filePath);
+            exit;
+        }
     }
 
     /**
